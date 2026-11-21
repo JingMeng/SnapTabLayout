@@ -1,8 +1,6 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
-apply plugin: 'org.jetbrains.dokka-android'
-apply plugin: 'com.jfrog.bintray'
 apply plugin: 'maven-publish'
 
 ext {
@@ -30,11 +28,17 @@ ext {
 }
 
 android {
-    compileSdkVersion 29
+    namespace 'com.fridayof1995.tabanimation'
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
+    }
+    kotlinOptions { jvmTarget = '11' }
+    compileSdk 34
 
     defaultConfig {
-        minSdkVersion 16
-        targetSdkVersion 29
+        minSdk 16
+        targetSdk 34
         versionCode 1
         versionName "1.0"
 
@@ -47,14 +51,11 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+    
     }
 
 }
 
-dokka {
-    outputFormat = 'html'
-    outputDirectory = "$buildDir/javadoc"
-}
 
 dependencies {
     testImplementation 'junit:junit:4.12'
@@ -66,8 +67,5 @@ dependencies {
     compileOnly "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 }
 
-if (project.rootProject.file('local.properties').exists())
-{
-    apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/installv1.gradle'
-    apply from: 'bintrayv1.gradle'
-}
+
+
